@@ -8,7 +8,7 @@
   --bg-app: #849dbd;
   --bg-panel: #849dbd;
   --bg-section: #7193bf;
-  --bg-input: #1e1e30;
+  --bg-input: #b6b6bf;
   --border: #2a2a40;
   --border-focus: #c9a227;
   --text-primary: #e8e8f0;
@@ -447,7 +447,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 30px 20px;
-  background: #111122;
+  background: #f0f0f0;;
 }
 .preview-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
 .preview-wrapper::-webkit-scrollbar-thumb { background: #2a2a40; }
@@ -566,7 +566,7 @@ body {
 .t2-job-desc { font-size: 12px; color: #555; line-height: 1.45; }
 .t2-contact-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #334; margin-bottom: 8px; word-break: break-all; }
 .t2-contact-item i { color: #0077b6; width: 12px; text-align: center; }
-.t2-info-box { background: #fff; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; border: 1px solid #c8e0f0; }
+.t2-info-box { background: #fff; color: #334; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; border: 1px solid #c8e0f0; }
 .t2-skill-chip { display: inline-block; background: #ddeeff; color: #0077b6; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: 3px; margin: 2px 2px 2px 0; }
 .t2-lang-row { display: flex; justify-content: space-between; font-size: 12px; color: #334; padding: 5px 0; border-bottom: 1px solid #c8e0f0; }
 .t2-lang-level { color: #0077b6; font-weight: 600; }
