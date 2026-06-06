@@ -62,7 +62,7 @@ body {
 
 /* ---------- UTILITY ---------- */
 .gold { color: var(--gold); }
-.required { color: var(--danger); font-size: 12px; }
+.required { color: var(--danger); font-size: 14px; }
 
 /* ============================================================
    APP HEADER
@@ -146,48 +146,48 @@ body {
   overflow-y: auto;
 }
 .form-scroll {
-  padding: 20px 20px 60px;
+  padding: 16px 16px 40px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 .form-section {
   background: var(--bg-section);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
+  border-radius: var(--radius-sm);
+  padding: 12px;
   transition: border-color var(--transition);
 }
 .form-section:hover { border-color: rgba(201,162,39,0.3); }
 .section-title {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
-.section-title i { color: var(--gold); font-size: 14px; }
+.section-title i { color: var(--gold); font-size: 12px; }
 
 /* TEMPLATE GRID */
 .template-section { margin-bottom: 2px; }
 .template-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 .tpl-card {
   background: var(--bg-input);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 6px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 4px;
   cursor: pointer;
   text-align: center;
   transition: all var(--transition);
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-muted);
   font-weight: 600;
 }
@@ -197,40 +197,39 @@ body {
   background: rgba(201,162,39,0.05);
 }
 .tpl-preview {
-  height: 55px;
-  border-radius: 5px;
-  margin-bottom: 6px;
+  height: 40px;
+  border-radius: 4px;
+  margin-bottom: 4px;
   overflow: hidden;
   position: relative;
 }
 .tpl1-preview { background: #0d2137; }
 .tpl1-preview .tpl-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 30%; background: #0a1a2b; }
-.tpl1-preview .tpl-lines { position: absolute; right: 6px; top: 8px; display: flex; flex-direction: column; gap: 4px; }
-.tpl1-preview .tpl-lines span { display: block; height: 3px; background: rgba(201,162,39,0.6); border-radius: 2px; width: 45px; }
-.tpl1-preview .tpl-lines span:nth-child(2) { width: 35px; }
-.tpl1-preview .tpl-lines span:nth-child(3) { width: 25px; }
+.tpl1-preview .tpl-lines { position: absolute; right: 4px; top: 6px; display: flex; flex-direction: column; gap: 3px; }
+.tpl1-preview .tpl-lines span { display: block; height: 2px; background: rgba(201,162,39,0.6); border-radius: 2px; width: 35px; }
+.tpl1-preview .tpl-lines span:nth-child(2) { width: 28px; }
+.tpl1-preview .tpl-lines span:nth-child(3) { width: 20px; }
 .tpl2-preview { background: #e8f4fd; }
-.tpl2-preview .tpl-circle { width: 24px; height: 24px; border-radius: 50% !important; background: #0077b6; position: absolute; left: 8px; top: 8px; }
-.tpl2-preview .tpl-lines { position: absolute; left: 40px; top: 10px; display: flex; flex-direction: column; gap: 4px; }
-.tpl2-preview .tpl-lines span { display: block; height: 3px; background: #0077b6; border-radius: 2px; width: 42px; opacity: 0.7; }
+.tpl2-preview .tpl-circle { width: 18px; height: 18px; border-radius: 50% !important; background: #0077b6; position: absolute; left: 6px; top: 6px; }
+.tpl2-preview .tpl-lines { position: absolute; left: 30px; top: 7px; display: flex; flex-direction: column; gap: 3px; }
+.tpl2-preview .tpl-lines span { display: block; height: 2px; background: #0077b6; border-radius: 2px; width: 32px; opacity: 0.7; }
 .tpl3-preview { background: #f4f9f6; border: 1px solid #d0e4d8; }
-.tpl3-preview .tpl-greenbar { position: absolute; top: 0; left: 0; right: 0; height: 5px; background: #2d6a4f; }
-.tpl3-preview .tpl-lines { position: absolute; left: 6px; top: 12px; display: flex; flex-direction: column; gap: 4px; }
-.tpl3-preview .tpl-lines span { display: block; height: 3px; background: #2d6a4f; border-radius: 2px; width: 45px; opacity: 0.7; }
-.tpl3-preview .tpl-lines span:nth-child(2) { width: 35px; background: #b7d9c6; opacity: 1; }
+.tpl3-preview .tpl-greenbar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #2d6a4f; }
+.tpl3-preview .tpl-lines { position: absolute; left: 5px; top: 8px; display: flex; flex-direction: column; gap: 3px; }
+.tpl3-preview .tpl-lines span { display: block; height: 2px; background: #2d6a4f; border-radius: 2px; width: 35px; opacity: 0.7; }
+.tpl3-preview .tpl-lines span:nth-child(2) { width: 28px; background: #b7d9c6; opacity: 1; }
 .tpl4-preview { background: #fff5f5; border: 1px solid #f5c6c6; position: relative; }
-.tpl4-preview .tpl4-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #c0392b; }
-.tpl4-preview .tpl4-lines { position: absolute; left: 12px; top: 8px; display: flex; flex-direction: column; gap: 4px; }
-.tpl4-preview .tpl4-lines span { display: block; height: 3px; background: #c0392b; border-radius: 2px; width: 42px; opacity: 0.7; }
+.tpl4-preview .tpl4-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #c0392b; }
+.tpl4-preview .tpl4-lines { position: absolute; left: 8px; top: 6px; display: flex; flex-direction: column; gap: 3px; }
+.tpl4-preview .tpl4-lines span { display: block; height: 2px; background: #c0392b; border-radius: 2px; width: 32px; opacity: 0.7; }
 .tpl5-preview { background: #ffffff; border: 1px solid #e0e0e0; position: relative; }
 .tpl5-preview .tpl5-side { position: absolute; left: 0; top: 0; bottom: 0; width: 28%; background: #f5f5f5; border-right: 1px solid #ddd; }
-.tpl5-preview .tpl5-lines { position: absolute; left: 35%; top: 8px; display: flex; flex-direction: column; gap: 4px; }
-.tpl5-preview .tpl5-lines span { display: block; height: 3px; background: #2563eb; border-radius: 2px; width: 40px; opacity: 0.5; }
+.tpl5-preview .tpl5-lines { position: absolute; left: 35%; top: 6px; display: flex; flex-direction: column; gap: 3px; }
+.tpl5-preview .tpl5-lines span { display: block; height: 2px; background: #2563eb; border-radius: 2px; width: 30px; opacity: 0.5; }
 .tpl6-preview { background: #f0f4f8; border: 1px solid #c8d8e8; position: relative; overflow: hidden; }
-.tpl6-preview .tpl6-header { position: absolute; top: 0; left: 0; right: 0; height: 18px; background: linear-gradient(135deg, #2c3e50, #34495e); }
-.tpl6-preview .tpl6-lines { position: absolute; left: 6px; top: 22px; display: flex; flex-direction: column; gap: 4px; }
-.tpl6-preview .tpl6-lines span { display: block; height: 3px; background: #2c3e50; border-radius: 2px; width: 44px; opacity: 0.6; }
-
+.tpl6-preview .tpl6-header { position: absolute; top: 0; left: 0; right: 0; height: 12px; background: linear-gradient(135deg, #2c3e50, #34495e); }
+.tpl6-preview .tpl6-lines { position: absolute; left: 5px; top: 16px; display: flex; flex-direction: column; gap: 3px; }
+.tpl6-preview .tpl6-lines span { display: block; height: 2px; background: #2c3e50; border-radius: 2px; width: 34px; opacity: 0.6; }
 /* FORM ELEMENTS */
 .form-grid {
   display: grid;
@@ -807,4 +806,86 @@ body {
   .form-grid { grid-template-columns: 1fr; }
   .template-grid { grid-template-columns: repeat(3, 1fr); }
   .cv-a4 { transform: scale(0.42); margin-bottom: calc(-1123px * 0.58); }
+}
+
+/* Ajustement automatique de l'espacement entre sections */
+.t1-body, .t2-main, .t3-main, .t4-body, .t5-main, .t6-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Quand il y a moins de sections, plus d'espace */
+.t1-body:has(:only-child),
+.t2-main:has(:only-child),
+.t3-main:has(:only-child),
+.t4-body:has(:only-child),
+.t5-main:has(:only-child),
+.t6-main:has(:only-child) {
+  justify-content: flex-start;
+  gap: 32px !important;
+}
+
+.t1-body:has(:nth-child(2):last-child),
+.t2-main:has(:nth-child(2):last-child),
+.t3-main:has(:nth-child(2):last-child),
+.t4-body:has(:nth-child(2):last-child),
+.t5-main:has(:nth-child(2):last-child),
+.t6-main:has(:nth-child(2):last-child) {
+  gap: 28px !important;
+}
+
+.t1-body:has(:nth-child(3):last-child),
+.t2-main:has(:nth-child(3):last-child),
+.t3-main:has(:nth-child(3):last-child),
+.t4-body:has(:nth-child(3):last-child),
+.t5-main:has(:nth-child(3):last-child),
+.t6-main:has(:nth-child(3):last-child) {
+  gap: 20px !important;
+}
+/* ============================================================
+   SECTION MODÈLES FIXE (STICKY)
+   ============================================================ */
+
+/* Conteneur parent du formulaire */
+.form-panel {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Le conteneur scrollable */
+.form-scroll {
+  padding: 20px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Section des modèles premium - STICKY */
+.template-section {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-panel);
+  margin-bottom: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Optionnel : Ajouter une bordure en bas pour séparer visuellement */
+.template-section::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Pour éviter que le contenu passe en dessous lors du scroll */
+.template-section {
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
