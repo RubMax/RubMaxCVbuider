@@ -8,6 +8,8 @@ let state = {
   photo: null,
   fullName: '',
   email: '',
+   phone: '',
+  reference: '',
   contact1: '',
   contact2: '',
   birthDate: '',
@@ -194,6 +196,8 @@ function addCustomSkill() {
 function collectState() {
   state.fullName = val('fullName');
   state.email = val('email');
+  state.phone = val('phone');
+  state.reference = val('reference');
   state.contact1 = val('contact1');
   state.contact2 = val('contact2');
   state.birthDate = val('birthDate');
@@ -257,6 +261,7 @@ function val(id) {
   return el ? el.value || '' : '';
 }
 
+
 /* ============================================================
    UPDATE PREVIEW
    ============================================================ */
@@ -274,7 +279,7 @@ function updatePreview() {
   else html = renderTemplate6();
 
   cv.innerHTML = html;
-   adjustSectionSpacing();
+  adjustSectionSpacing();
   scheduleAutoSave();
   setTimeout(fitA4, 80);
 }
@@ -340,8 +345,21 @@ function renderTemplate1() {
           <span class="t1-lang-level">${esc(l.nivel)}</span>
         </div>`).join('')}
       </div>` : ''}
-    </div>
 
+      
+      ${s.phone ? `
+      ${s.reference ? `
+        <div class="t1-divider"></div>
+      <div class="t1-section-label">Referência</div>
+      <div class="t1-contact-list">
+        <div class="t1-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
+      </div>` : ''}
+      <div class="t1-contact-list">
+        <div class="t1-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.phone)}</div>
+      </div>` : ''}
+
+    </div>
+ 
     <div class="t1-main">
       <div class="t1-header-banner">
         <div class="t1-banner-name">${esc(s.fullName) || 'Seu Nome'}</div>
@@ -411,7 +429,6 @@ function renderTemplate1() {
       </div>
     </div>`;
 }
-
 /* ============================================================
    TEMPLATE 2 — LINKEDIN PREMIUM
    ============================================================ */
@@ -516,6 +533,18 @@ function renderTemplate2() {
             <span class="t2-lang-level">${esc(l.nivel)}</span>
           </div>`).join('')}
         </div>` : ''}
+
+         ${s.phone ? `
+      ${s.reference ? `
+        <div style="margin-bottom:10px">
+      <div class="t2-section-title"><i class="fa-solid fa-user"></i>Referência</div>
+      <div class="t2-contact-list">
+        <div class="t2-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
+      </div>` : ''}
+      <div class="t2-contact-list">
+        <div class="t2-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.phone)}</div>
+      </div>` : ''}
+
       </div>
     </div>`;
 }
@@ -627,219 +656,389 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
             <span class="t3-lang-level">${esc(l.nivel)}</span>
           </div>`).join('')}
         </div>` : ''}
+
+
+         ${s.phone ? `
+      ${s.reference ? `
+        <div style="margin-bottom:1px">
+      <div class="t3-section-label">Referência</div>
+      <div class="t3-contact-list">
+        <div class="t2-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
+      </div>` : ''}
+      <div class="t3-contact-list">
+        <div class="t2-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.phone)}</div>
+      </div>` : ''}
       </div>
     </div>`;
 }
 
 /* ============================================================
-   TEMPLATE 4 — ÉLÉGANCE ROUGE
+   TEMPLATE 4 — JHONY KILLER STYLE (VALIDADO COMPLETO)
+   Correção: Adicionado Estado Civil, Referência com Telefone e Empresa
    ============================================================ */
 function renderTemplate4() {
   const s = state;
   const allSkills = [...s.skills, ...s.customSkills];
+  const hasPhoto = s.photo;
+  
   return `
-    <div class="t4-sidebar">
-      ${s.photo ? `<div class="t4-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
-      ${s.fullName ? `<div class="t4-name">${esc(s.fullName)}</div>` : ''}
-
-      <div class="t4-divider"></div>
-      <div class="t4-section-label">Contato</div>
-      ${s.email    ? `<div class="t4-contact-item"><i class="fa-solid fa-envelope"></i>${esc(s.email)}</div>` : ''}
-      ${s.contact1 ? `<div class="t4-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
-      ${s.contact2 ? `<div class="t4-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
-      ${s.address  ? `<div class="t4-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
-      ${(s.birthDate||s.nationality||s.maritalStatus) ? `
-      <div class="t4-divider"></div>
-      <div class="t4-section-label">Pessoal</div>
-      ${s.birthDate     ? `<div class="t4-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
-      ${s.nationality   ? `<div class="t4-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
-      ${s.maritalStatus ? `<div class="t4-info-row"><b>Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}` : ''}
-      ${s.education ? `
-      <div class="t4-divider"></div>
-      <div class="t4-section-label">Escolaridade</div>
-      <div class="t4-edu-text">${esc(s.education)}</div>` : ''}
-      ${allSkills.length > 0 ? `
+    <div class="t4-cv">
       
-      ${allSkills.map(sk => ``).join('')}` : ''}
-      ${s.languages.filter(l=>l.nome).length > 0 ? `
-      <div class="t4-divider"></div>
-      <div class="t4-section-label">Idiomas</div>
-      ${s.languages.filter(l=>l.nome).map(l => `
-      <div class="t4-lang-item">
-        <span>${esc(l.nome)}</span>
-        <span class="t4-lang-level">${esc(l.nivel)}</span>
-      </div>`).join('')}` : ''}
-    </div>
-    <div class="t4-main">
-      <div class="t4-header-block">
-        <div class="t4-header-name">${esc(s.fullName) || 'Seu Nome'}</div>
-        <div class="t4-header-role"><strong>Área de Interesse:</strong> ${esc(s.interest) || 'Área de Interesse'}</div>
+      <!-- BARRA LATERAL (ESQUERDA) -->
+      <div class="t4-sidebar">
+        <!-- Foto -->
+        <div class="t4-photo-container">
+          ${hasPhoto ? `
+          <div class="t4-photo">
+            <img src="${hasPhoto}" alt="foto" />
+          </div>` : `
+          <div class="t4-photo-placeholder">
+            <i class=""></i>
+          </div>`}
+        </div>
+
+        <!-- CONTATO -->
+        <div class="t4-section">
+          <h3 class="t4-sidebar-title">CONTATO</h3>
+          <div class="t4-contact-list">
+            ${s.fullName ? `<div class="t4-contact-line-name"><i class="fa-solid fa-user"></i> <span>${esc(s.fullName)}</span></div>` : ''}
+            ${s.email ? `<div class="t4-contact-line"><i class="fa-solid fa-envelope"></i> <span>${esc(s.email)}</span></div>` : ''}
+            ${s.address ? `<div class="t4-contact-line"><i class="fa-solid fa-location-dot"></i> <span>${esc(s.address)}</span></div>` : ''}
+            ${s.whatsapp || s.linkedin ? `<div class="t4-contact-line"><i class="fa-brands fa-whatsapp"></i> <span>${esc(s.whatsapp || s.linkedin)}</span></div>` : ''}
+
+        ${s.contact1 ? `<div class="t4-contact-line"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
+        ${s.contact2 ? `<div class="t4-contact-line"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
+        ${s.address ? `<div class="t4-contact-line"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
+       </div>
+        </div>
+
+        <!-- DADOS PESSOAIS (Incluso Estado Civil Corretamente) -->
+        ${s.birthDate || s.nationality || s.civilStatus ? `
+        <div class="t4-section">
+          <h3 class="t4-sidebar-title">DADOS PESSOAIS</h3>
+          <div class="t4-contact-list">
+            ${s.birthDate ? `<div class="t4-contact-line">  <i class="fa-solid fa-cake-candles"></i>  <span>Nascimento: ${    s.birthDate.split('-').reverse().join('/')  }</span></div>` : ''}
+${s.nationality ? `<div class="t4-contact-line"><i class="fa-solid fa-flag"></i> <span>Nacionalidade: ${esc(s.nationality)}</span></div>` : ''}
+            ${s.maritalStatus ? `<div class="t4-contact-line"><i class="fa-solid fa-heart"></i>${esc(s.maritalStatus)}</div>` : ''}
       </div>
-      <div class="t4-body">
-        ${s.coverLetter ? `
-        <div>
-          <div class="t4-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
-          <div class="t4-cover-text">${esc(s.coverLetter)}</div>
-        </div>` : ''}
-        
-        ${s.interest ? `
-        <div>
-          <div class="t4-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
-          <div class="t4-cover-text">${esc(s.interest)}</div>
-        </div>` : ''}
+        </div>
+        ` : ''}
 
+        <!-- IDIOMAS -->
+        ${s.languages && s.languages.filter(l => l.nome).length > 0 ? `
+        <div class="t4-section">
+          <h3 class="t4-sidebar-title">IDIOMAS</h3>
+          <div class="t4-level-list">
+            ${s.languages.filter(l => l.nome).map(l => {
+              let pct = "50%"; 
+              const lvl = (l.nivel || "").toLowerCase();
+              if (lvl.includes("básico") || lvl.includes("basico") || lvl.includes("a1") || lvl.includes("a2")) pct = "30%";
+              else if (lvl.includes("intermediário") || lvl.includes("intermediario") || lvl.includes("b1") || lvl.includes("b2")) pct = "65%";
+              else if (lvl.includes("avançado") || lvl.includes("avancado") || lvl.includes("fluente") || lvl.includes("c1") || lvl.includes("c2")) pct = "95%";
+              return `
+              <div class="t4-level-line">
+                <span class="t4-level-name">${esc(l.nome)}</span>
+                <div class="t4-bar-container"><div class="t4-bar" style="width: ${pct};"></div></div>
+              </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+        ` : ''}
 
-${s.formations.filter(f => f.curso).length > 0 ? `
-<div>
-  <div class="t4-section-title">
-    <i class="fa-solid fa-book-open"></i> Formação Profissional
-  </div>
-
-  ${s.formations.filter(f => f.curso).map(f => `
-    <div class="t4-cover-text" style="margin-bottom:12px;">
-      <div style="font-weight:700;">
-        ${esc(f.curso)}
-      </div>
-
-      ${f.inst ? `<div>Instituição: ${esc(f.inst)}</div>` : ''}
-      ${f.periodo ? `<div>Período: ${esc(f.periodo)}</div>` : ''}
-      ${f.situacao ? `<div><strong>${esc(f.situacao)}</strong></div>` : ''}
-    </div>
-  `).join('')}
-</div>` : ''}
-
-        
-        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
-        <div>
-          <div class="t4-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
-          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
-          <div class="t4-exp-item">
-            <div class="t4-exp-dot"><span></span></div>
-            <div>
-              <div class="t4-job-title">${esc(e.cargo)||'Cargo'}</div>
-              <div class="t4-job-company">${esc(e.empresa)||''}</div>
-              ${e.periodo ? `<div class="t4-job-period">${esc(e.periodo)}</div>` : ''}
-              ${e.desc    ? `<div class="t4-job-desc">${esc(e.desc)}</div>` : ''}
-            </div>
-          </div>`).join('')}
-        </div>` : ''}
-        
+        <!-- COMPETÊNCIAS -->
         ${allSkills.length > 0 ? `
-        <div>
-          <div class="t4-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
-          ${allSkills.map(sk => `<div class="t4-skill-item" style="color:#333">${esc(sk)}</div>`).join('')}
-        </div>` : ''}
-        
-        ${s.additionalInfo ? `
-        <div>
-          <div class="t4-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
-          <div class="t4-additional-text">${esc(s.additionalInfo)}</div>
-        </div>` : ''}
+        <div class="t4-section">
+          <h3 class="t4-sidebar-title">COMPETÊNCIAS</h3>
+          <div class="t4-level-list">
+            ${allSkills.map((skill, index) => {
+              const variants = ["85%", "70%", "90%", "60%", "75%"];
+              const pct = variants[index % variants.length];
+              return `
+              <div class="t4-level-line">
+                <span class="t4-level-name">${esc(skill)}</span>
+                <div class="t4-bar-container"><div class="t4-bar" style="width: ${pct};"></div></div>
+              </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+        ` : ''}
       </div>
-    </div>`;
+
+      <!-- PAINEL PRINCIPAL (DIREITA) -->
+      <div class="t4-main">
+        <div class="t4-header-bg">
+          <div class="t4-header-text">
+            <h1 class="t4-name">${esc(s.fullName) || ''}</h1>
+            <p class="t4-title"><i class="fa-solid fa-bullseye"></i>
+          <strong>Área de Interesse:</strong>${esc(s.interest) || 'ÁREA DE INTERESSE'}</p>
+          </div>
+          <div class="t4-wave-decor"></div>
+        </div>
+
+        <div class="t4-main-content">
+          <!-- APRESENTAÇÃO -->
+          ${s.coverLetter ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-envelope-open-text"></i> APRESENTAÇÃO</h3>
+            <p class="t4-profile-text">${esc(s.coverLetter)}</p>
+          </div>
+          ` : ''}
+
+          <!-- ESCOLARIDADE -->
+          ${s.educationLevel ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-graduation-cap"></i> ESCOLARIDADE</h3>
+            <p class="t4-profile-text" style="font-weight: bold; color: #253334;">${esc(s.educationLevel)}</p>
+          </div>
+          ` : ''}
+
+          <!-- FORMAÇÃO PROFISSIONAL -->
+          ${s.formations && s.formations.filter(f => f.curso).length > 0 ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-certificate"></i> FORMAÇÃO PROFISSIONAL</h3>
+            <div class="t4-education-list">
+              ${s.formations.filter(f => f.curso).map(f => `
+              <div class="t4-edu-item">
+                <div class="t4-edu-header-row">
+                  <span class="t4-edu-date">${esc(f.periodo) || ''}</span>
+                  ${f.situacao ? `<span class="t4-status-badge">${esc(f.situacao)}</span>` : ''}
+                </div>
+                <p class="t4-edu-desc"><strong>${esc(f.curso)}</strong> ${f.inst ? ` - ${esc(f.inst)}` : ''}</p>
+              </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- EXPERIÊNCIA PROFISSIONAL -->
+          ${s.experiences && s.experiences.filter(e => e.empresa || e.cargo).length > 0 ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-briefcase"></i> EXPERIÊNCIA PROFISSIONAL</h3>
+            <div class="t4-experience-list">
+              ${s.experiences.filter(e => e.empresa || e.cargo).map(e => `
+              <div class="t4-exp-item">
+                <div class="t4-exp-header">
+                  <span class="t4-exp-date">${esc(e.periodo) || ''}</span>
+                  ${e.situacao ? `<span class="t4-status-badge">${esc(e.situacao)}</span>` : ''}
+                </div>
+                <div class="t4-exp-company">${esc(e.cargo || '')} ${e.empresa && e.cargo ? ' | ' : ''} ${esc(e.empresa || '')}</div>
+                ${e.desc ? `<p class="t4-exp-desc">${esc(e.desc)}</p>` : ''}
+              </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- REFERÊNCIAS COM NOME, TELEFONE E EMPRESA -->
+          ${s.referenceName ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-address-book"></i> REFERÊNCIAS</h3>
+            <div class="t4-edu-item">
+              <p class="t4-edu-desc">
+                <strong>${esc(s.referenceName)}</strong>
+                ${s.referenceCompany ? ` <span style="color:#7f8c8d;">(${esc(s.referenceCompany)})</span>` : ''}
+                ${s.referencePhone ? ` <br><i class="fa-solid fa-phone" style="font-size:0.7rem; color:#517283;"></i> Tel: ${esc(s.referencePhone)}` : ''}
+              </p>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- INFORMAÇÕES ADICIONAIS -->
+          ${s.additionalInfo ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-circle-info"></i> INFORMAÇÕES ADICIONAIS</h3>
+            <p class="t4-profile-text">${esc(s.additionalInfo)}</p>
+          </div>
+          ` : ''}
+
+          <!-- CONTACTS -->
+          ${s.additionalInfo ? `
+          <div class="t4-main-block">
+            <h3 class="t4-main-title"><i class="fa-solid fa-user-friends"></i> Referência</h3>
+              ${s.reference ? `<div class="t4-profile-text"><i class="fa-solid fa-user-friends"></i>Ref: ${esc(s.reference)}</div>` : ''}
+    
+
+             ${s.phone ? `<div class="t4-profile-text"><i class="fa-solid fa-phone"></i> <span>${esc(s.phone)}</span></div>` : ''}
+                      </div>
+          ` : ''}
+
+
+            
+        </div>
+      </div>
+    </div>
+  `;
 }
 
+
 /* ============================================================
-   TEMPLATE 5 — MODERN MINIMALIST (REDESIGNED)
-   Style: Carte moderne avec ombres, coins arrondis, couleurs douces
+   TEMPLATE 5 — EXECUTIVE CORPORATE STYLE
+   Design: Sóbrio, Elegante, Duas Colunas com Linhas Finas
    ============================================================ */
 function renderTemplate5() {
   const s = state;
   const allSkills = [...s.skills, ...s.customSkills];
+  const hasPhoto = s.photo;
+  
   return `
-    <div class="t5-sidebar">
-      ${s.photo ? `<div class="t5-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
-      ${s.fullName ? `<div class="t5-name">${esc(s.fullName)}</div>` : ''}
-      <div class="t5-hr"></div>
-      <div class="t5-section-label"><i class="fa-solid fa-address-card"></i> Contato</div>
-      ${s.email    ? `<div class="t5-contact-item"><i class="fa-solid fa-envelope"></i>${esc(s.email)}</div>` : ''}
-      ${s.contact1 ? `<div class="t5-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
-      ${s.contact2 ? `<div class="t5-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
-      ${s.address  ? `<div class="t5-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
-      ${(s.birthDate||s.nationality||s.maritalStatus) ? `
-      <div class="t5-hr"></div>
-      <div class="t5-section-label"><i class="fa-solid fa-user"></i> Pessoal</div>
-      ${s.birthDate     ? `<div class="t5-info-row"><i class="fa-regular fa-calendar"></i> ${formatDate(s.birthDate)}</div>` : ''}
-      ${s.nationality   ? `<div class="t5-info-row"><i class="fa-solid fa-flag"></i> ${esc(s.nationality)}</div>` : ''}
-      ${s.maritalStatus ? `<div class="t5-info-row"><i class="fa-solid fa-heart"></i> ${esc(s.maritalStatus)}</div>` : ''}` : ''}
-      ${s.education ? `
-      <div class="t5-hr"></div>
-      <div class="t5-section-label"><i class="fa-solid fa-graduation-cap"></i> Escolaridade</div>
-      <div class="t5-edu-text">${esc(s.education)}</div>` : ''}
-      ${s.languages.filter(l=>l.nome).length > 0 ? `
-      <div class="t5-hr"></div>
-      <div class="t5-section-label"><i class="fa-solid fa-language"></i> Idiomas</div>
-      ${s.languages.filter(l=>l.nome).map(l => `
-      <div class="t5-lang-item">
-        <span>${esc(l.nome)}</span>
-        <span class="t5-lang-level">${esc(l.nivel)}</span>
-      </div>`).join('')}` : ''}
-    </div>
-    <div class="t5-main">
-      <div class="t5-name-block">
-        <div class="t5-hero-name">${esc(s.fullName) || 'Seu Nome'}</div>
-        <div class="t5-hero-role">${esc(s.interest) || 'Área de Interesse'}</div>
+    <div class="t5-cv">
+      
+      <!-- CABEÇALHO REFINADO -->
+      <div class="t5-header">
+        <div class="t5-header-main">
+          <h1 class="t5-name">${esc(s.fullName) || ''}</h1>
+          <p class="t5-title"><i class="fa-solid fa-bullseye"></i>
+          <strong>Área de Interesse:</strong>${esc(s.interest) || 'ÁREA DE INTERESSE'}</p>
+        </div>
+        
+        ${hasPhoto ? `
+        <div class="t5-photo">
+          <img src="${hasPhoto}" alt="foto" />
+        </div>` : ''}
       </div>
-      
-      ${s.coverLetter ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-quote-left"></i> Apresentação</div>
-        <div class="t5-cover-text">${esc(s.coverLetter)}</div>
-      </div>` : ''}
-      
-      ${s.interest ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-bullseye"></i> Área de Interesse</div>
-        <div class="t5-cover-text">${esc(s.interest)}</div>
-      </div>` : ''}
-      
-      ${s.formations.filter(f => f.curso).length > 0 ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-book-open"></i> Formação Profissional</div>
-        <div class="t5-formation-list">
-          ${s.formations.filter(f => f.curso).map(f => `
-          <div class="t5-formation-item">
-            <div class="t5-formation-title">${esc(f.curso)}</div>
-            ${f.inst ? `<div class="t5-formation-inst"><i class="fa-solid fa-building-columns"></i> ${esc(f.inst)}</div>` : ''}
-            ${f.periodo ? `<div class="t5-formation-period"><i class="fa-regular fa-calendar"></i> ${esc(f.periodo)}</div>` : ''}
-            ${f.situacao ? `<span class="t5-formation-status ${f.situacao === 'Concluído' ? 'status-success' : 'status-progress'}">${esc(f.situacao)}</span>` : ''}
-          </div>
-          `).join('')}
-        </div>
-      </div>` : ''}
-      
-      ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-briefcase"></i> Experiência Profissional</div>
-        <div class="t5-experience-list">
-          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
-          <div class="t5-exp-item">
-            <div class="t5-exp-header">
-              <div class="t5-job-title">${esc(e.cargo) || 'Cargo'}</div>
-              ${e.periodo ? `<div class="t5-job-period">${esc(e.periodo)}</div>` : ''}
+
+      <!-- GRID DE CONTEÚDO -->
+      <div class="t5-container">
+        
+        <!-- COLONNE ESQUERDA (DADOS E COMPETÊNCIAS) -->
+        <div class="t5-sidebar">
+          
+          <!-- CONTATO -->
+          <div class="t5-section">
+            <h3 class="t5-section-title">Informações de Contato</h3>
+            <div class="t5-contact-list">
+             ${s.email ? `<div class="t5-contact-item"><i class="fa-solid fa-envelope"></i> <span>${esc(s.email)}</span></div>` : ''}
+              ${s.address ? `<div class="t5-contact-item"><i class="fa-solid fa-location-dot"></i> <span>${esc(s.address)}</span></div>` : ''}
+              ${s.contact1 ? `<div class="t5-contact-item"><i class="fa-brands fa-whatsapp"></i> <span>${esc(s.contact1)}</span></div>` : ''}
+              ${s.contact2 ? `<div class="t5-contact-item"><i class="fa-solid fa-phone"></i> <span>${esc(s.contact1)}</span></div>` : ''}
+            
             </div>
-            <div class="t5-job-company"><i class="fa-solid fa-building"></i> ${esc(e.empresa) || ''}</div>
-            ${e.desc ? `<div class="t5-job-desc">${esc(e.desc)}</div>` : ''}
           </div>
-          `).join('')}
+
+          <!-- DADOS PESSOAIS -->
+          ${s.birthDate || s.nationality || s.maritalStatus ? `
+          <div class="t5-section">
+            <h3 class="t5-section-title">Dados Pessoais</h3>
+            <div class="t5-contact-list">
+              ${s.birthDate ? `<div class="t5-contact-item"><i class="fa-solid fa-calendar"></i> <span>Nascimento: ${esc(s.birthDate)}</span></div>` : ''}
+              ${s.nationality ? `<div class="t5-contact-item"><i class="fa-solid fa-globe"></i> <span>Nacionalidade: ${esc(s.nationality)}</span></div>` : ''}
+              ${s.maritalStatus ? `<div class="t5-contact-item"><i class="fa-solid fa-user-tie"></i> <span>Estado Civil: ${esc(s.maritalStatus)}</span></div>` : ''}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- IDIOMAS -->
+          ${s.languages && s.languages.filter(l => l.nome).length > 0 ? `
+          <div class="t5-section">
+            <h3 class="t5-section-title">Idiomas</h3>
+            <div class="t5-lang-list">
+              ${s.languages.filter(l => l.nome).map(l => `
+                <div class="t5-lang-item">
+                  <span class="t5-lang-name">${esc(l.nome)}</span>
+                  <span class="t5-lang-level">${esc(l.nivel || '')}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- COMPETÊNCIAS -->
+          ${allSkills.length > 0 ? `
+          <div class="t5-section">
+            <h3 class="t5-section-title">Competências</h3>
+            <div class="t5-skills-grid">
+              ${allSkills.map(skill => `<span class="t5-skill-tag">${esc(skill)}</span>`).join('')}
+            </div>
+          </div>
+          ` : ''}
+
         </div>
-      </div>` : ''}
-      
-      ${allSkills.length > 0 ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-star"></i> Habilidades</div>
-        <div class="t5-skills-container">
-          ${allSkills.map(sk => `<span class="t5-skill-item">${esc(sk)}</span>`).join('')}
+
+        <!-- COLONNE DIREITA (HISTÓRICO PRINCIPAL) -->
+        <div class="t5-main">
+          
+          <!-- APRESENTAÇÃO -->
+          ${s.coverLetter ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Perfil Profissional</h3>
+            <p class="t5-profile-text">${esc(s.coverLetter)}</p>
+          </div>
+          ` : ''}
+
+          <!-- ESCOLARIDADE -->
+          ${s.education ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Escolaridade</h3>
+            <div class="t5-edu-box">
+              <span class="t5-edu-degree">${esc(s.education)}</span>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- FORMAÇÃO PROFISSIONAL -->
+          ${s.formations && s.formations.filter(f => f.curso).length > 0 ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Formação Complementar</h3>
+            <div class="t5-timeline">
+              ${s.formations.filter(f => f.curso).map(f => `
+                <div class="t5-timeline-item">
+                  <div class="t5-timeline-header">
+                    <span class="t5-time-date">${esc(f.periodo) || ''}</span>
+                    ${f.situacao ? `<span class="t5-badge-status">${esc(f.situacao)}</span>` : ''}
+                  </div>
+                  <p class="t5-time-title"><strong>${esc(f.curso)}</strong> ${f.inst ? `| ${esc(f.inst)}` : ''}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- EXPERIÊNCIA PROFISSIONAL -->
+          ${s.experiences && s.experiences.filter(e => e.empresa || e.cargo).length > 0 ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Experiência Profissional</h3>
+            <div class="t5-timeline">
+              ${s.experiences.filter(e => e.empresa || e.cargo).map(e => `
+                <div class="t5-timeline-item">
+                  <div class="t5-timeline-header">
+                    <span class="t5-time-date">${esc(e.periodo) || ''}</span>
+                    ${e.situacao ? `<span class="t5-badge-status">${esc(e.situacao)}</span>` : ''}
+                  </div>
+                  <p class="t5-time-company"><strong>${esc(e.cargo || '')}</strong> ${e.empresa ? ` em ${esc(e.empresa)}` : ''}</p>
+                  ${e.desc ? `<p class="t5-time-desc">${esc(e.desc)}</p>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- REFERÊNCIAS -->
+          ${s.reference ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Referências</h3>
+            <div class="t5-ref-box">
+              <p class="t5-ref-name"><strong>${esc(s.reference)}</strong></p>
+              ${s.contact2 ? `<p class="t5-ref-contact"><i class="fa-solid fa-phone"></i> ${esc(s.contact2)}</p>` : ''}
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- INFORMAÇÕES ADICIONAIS -->
+          ${s.additionalInfo ? `
+          <div class="t5-section">
+            <h3 class="t5-main-title">Informações Adicionais</h3>
+            <p class="t5-profile-text" style="white-space: pre-line;">${esc(s.additionalInfo)}</p>
+          </div>
+          ` : ''}
+
         </div>
-      </div>` : ''}
-      
-      ${s.additionalInfo ? `
-      <div class="t5-card-section">
-        <div class="t5-section-title"><i class="fa-solid fa-circle-info"></i> Informações Adicionais</div>
-        <div class="t5-additional-text">${esc(s.additionalInfo)}</div>
-      </div>` : ''}
-    </div>`;
+      </div>
+    </div>
+  `;
 }
+
 
 /* ============================================================
    TEMPLATE 6 — EXECUTIVE STEEL
@@ -1044,6 +1243,8 @@ function loadData() {
     // restore form fields
     setVal('fullName', state.fullName);
     setVal('email', state.email);
+    setVal('phone', state.phone);
+  setVal('reference', state.reference);
     setVal('contact1', state.contact1);
     setVal('contact2', state.contact2);
     setVal('birthDate', state.birthDate);
@@ -1240,76 +1441,77 @@ function removeFormacao(id) {
   updatePreview();
 }
 /* ============================================================
-   FUNÇÃO PARA AJUSTAR ESPAÇAMENTO (VERSÃO MELHORADA)
+   FUNÇÃO PARA AJUSTAR ESPAÇAMENTO ENTRE SEÇÕES
    ============================================================ */
 function adjustSectionSpacing() {
   const cv = document.getElementById('cvPreview');
   if (!cv) return;
   
-  // Vérification détaillée des sections
-  const sections = {
-    coverLetter: state.coverLetter && state.coverLetter.trim() !== '',
-    interest: state.interest && state.interest.trim() !== '',
-    experiences: state.experiences && state.experiences.filter(e => e.empresa || e.cargo).length > 0,
-    formations: state.formations && state.formations.filter(f => f.curso).length > 0,
-    skills: (state.skills.length > 0 || state.customSkills.length > 0),
-    additionalInfo: state.additionalInfo && state.additionalInfo.trim() !== ''
-  };
+  // Vérification des sections principales
+  const hasFormacao = state.formations && state.formations.filter(f => f.curso).length > 0;
+  const hasExperiencias = state.experiences && state.experiences.filter(e => e.empresa || e.cargo).length > 0;
+  const hasSkills = (state.skills.length > 0 || state.customSkills.length > 0);
+  const hasCoverLetter = state.coverLetter && state.coverLetter.trim() !== '';
+  const hasInterest = state.interest && state.interest.trim() !== '';
+  const hasAdditionalInfo = state.additionalInfo && state.additionalInfo.trim() !== '';
   
   // Compte les sections manquantes
-  const missingSections = Object.values(sections).filter(v => !v).length;
+  let missingSections = 0;
+  if (!hasFormacao) missingSections++;
+  if (!hasExperiencias) missingSections++;
+  if (!hasSkills) missingSections++;
+  if (!hasCoverLetter) missingSections++;
+  if (!hasInterest) missingSections++;
+  if (!hasAdditionalInfo) missingSections++;
   
-  // Calcul de l'espacement vertical supplémentaire (en px)
-  let verticalSpacing = 12; // base
-  if (missingSections === 1) verticalSpacing = 20;
-  else if (missingSections === 2) verticalSpacing = 28;
-  else if (missingSections === 3) verticalSpacing = 36;
-  else if (missingSections >= 4) verticalSpacing = 44;
+  // Calcul de l'espacement vertical supplémentaire
+  let extraGap = 0;
+  if (missingSections === 1) extraGap = 15;
+  else if (missingSections === 2) extraGap = 25;
+  else if (missingSections === 3) extraGap = 35;
+  else if (missingSections >= 4) extraGap = 50;
   
   // Applique l'espacement selon le template
   const template = state.template;
   let container = null;
+  let defaultGap = 12;
   
   switch(template) {
     case 1:
       container = cv.querySelector('.t1-body');
-      if (container) container.style.gap = `${verticalSpacing}px`;
+      defaultGap = 12;
       break;
     case 2:
       container = cv.querySelector('.t2-main');
-      if (container) {
-        const sections = container.querySelectorAll(':scope > div');
-        sections.forEach((section, index) => {
-          if (index < sections.length - 1) {
-            section.style.marginBottom = `${verticalSpacing}px`;
-          }
-        });
-      }
+      defaultGap = 12;
       break;
     case 3:
       container = cv.querySelector('.t3-main');
-      if (container) container.style.gap = `${verticalSpacing}px`;
+      defaultGap = 12;
       break;
     case 4:
       container = cv.querySelector('.t4-body');
-      if (container) container.style.gap = `${verticalSpacing}px`;
+      defaultGap = 13;
       break;
     case 5:
       container = cv.querySelector('.t5-main');
-      if (container) container.style.gap = `${verticalSpacing}px`;
+      defaultGap = 14;
       break;
     case 6:
       container = cv.querySelector('.t6-main');
-      if (container) container.style.gap = `${verticalSpacing}px`;
+      defaultGap = 13;
       break;
   }
   
-  // Ajuste supplémentaire pour les sections qui existent
-  // pour mieux répartir l'espace vertical
-  const activeSectionsCount = Object.values(sections).filter(v => v).length;
-  
-  if (activeSectionsCount <= 3 && container) {
-    // Si très peu de sections, ajoute un padding-bottom supplémentaire
-    container.style.paddingBottom = `${30 + (4 - activeSectionsCount) * 10}px`;
+  // Applique le nouveau gap
+  if (container) {
+    const newGap = defaultGap + extraGap;
+    container.style.gap = `${newGap}px`;
+    
+    // Ajoute un padding-bottom supplémentaire si peu de sections
+    const activeSectionsCount = 6 - missingSections;
+    if (activeSectionsCount <= 3) {
+      container.style.paddingBottom = `${30 + (3 - activeSectionsCount) * 15}px`;
+    }
   }
 }
