@@ -327,7 +327,7 @@ function renderTemplate1() {
         ${s.contact2 ? `<div class="t1-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
         ${s.address ? `<div class="t1-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
         ${s.birthDate ? `<div class="t1-contact-item"><i class="fa-solid fa-cake-candles"></i>${formatDate(s.birthDate)}</div>` : ''}
-        ${s.nationality ? `<div class="t1-contact-item"><i class="fa-solid fa-flag"></i>${esc(s.nationality)}</div>` : ''}
+        ${s.nationality ? `<div class="t1-contact-item"><i class="fa-solid fa-flag"></i>${esc(s.nationality).toUpperCase()}</div>` : ''}
         ${s.maritalStatus ? `<div class="t1-contact-item"><i class="fa-solid fa-heart"></i>${esc(s.maritalStatus)}</div>` : ''}
       </div>
       ${s.education ? `
@@ -350,7 +350,7 @@ function renderTemplate1() {
       ${s.phone ? `
       ${s.reference ? `
         <div class="t1-divider"></div>
-      <div class="t1-section-label">Referência</div>
+      <div class="t1-section-label">REFERÊNCIAS</div>
       <div class="t1-contact-list">
         <div class="t1-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
       </div>` : ''}
@@ -389,7 +389,7 @@ function renderTemplate1() {
             <div style="font-weight:700; font-size:12px; color:#0d2137; text-transform:uppercase;">
               ${esc(f.curso)}
             </div>
-            ${f.inst    ? `<div style="font-size:12px;color:#555;">Instituição: <b>${esc(f.inst)}</b></div>` : ''}
+            ${f.inst    ? `<div style="font-size:12px;color:#555;">Instituição: <b>${esc(f.inst).toUpperCase()}</b></div>` : ''}
             ${f.periodo ? `<div style="font-size:12px;color:#555;">Período: ${esc(f.periodo)}</div>` : ''}
             ${f.situacao? `<div style="font-size:11px;color:var(--tpl1-accent);font-weight:600;">${esc(f.situacao)}</div>` : ''}
           </div>`).join('')}
@@ -482,7 +482,7 @@ function renderTemplate2() {
         ${esc(f.curso)}
       </div>
 
-      ${f.inst ? `<div>Instituição: ${esc(f.inst)}</div>` : ''}
+      ${f.inst ? `<div>Instituição: ${esc(f.inst).toUpperCase()}</div>` : ''}
       ${f.periodo ? `<div>Período: ${esc(f.periodo)}</div>` : ''}
       ${f.situacao ? `<div><strong>${esc(f.situacao)}</strong></div>` : ''}
     </div>
@@ -515,7 +515,7 @@ function renderTemplate2() {
           <div class="t2-section-title"><i class="fa-solid fa-id-card"></i>Pessoal</div>
           <div class="t2-info-box">
             ${s.birthDate ? `<p><b>Nascimento:</b> ${formatDate(s.birthDate)}</p>` : ''}
-            ${s.nationality ? `<p><b>Nacionalidade:</b> ${esc(s.nationality)}</p>` : ''}
+            ${s.nationality ? `<p><b>Nacionalidade:</b> ${esc(s.nationality).toUpperCase()}</p>` : ''}
             ${s.maritalStatus ? `<p><b>Estado Civil:</b> ${esc(s.maritalStatus)}</p>` : ''}
           </div>
         </div>` : ''}
@@ -537,7 +537,7 @@ function renderTemplate2() {
          ${s.phone ? `
       ${s.reference ? `
         <div style="margin-bottom:10px">
-      <div class="t2-section-title"><i class="fa-solid fa-user"></i>Referência</div>
+      <div class="t2-section-title"><i class="fa-solid fa-user"></i>REFERÊNCIAS</div>
       <div class="t2-contact-list">
         <div class="t2-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
       </div>` : ''}
@@ -615,7 +615,7 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
         ${esc(f.curso)}
       </div>
 
-      ${f.inst ? `<div>Instituição: ${esc(f.inst)}</div>` : ''}
+      ${f.inst ? `<div>Instituição: ${esc(f.inst).toUpperCase()}</div>` : ''}
       ${f.periodo ? `<div>Período: ${esc(f.periodo)}</div>` : ''}
       ${f.situacao ? `<div><strong>${esc(f.situacao)}</strong></div>` : ''}
     </div>
@@ -639,7 +639,7 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
         <div>
           <div class="t3-section-label">Pessoal</div>
           ${s.birthDate    ? `<div class="t3-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
-          ${s.nationality  ? `<div class="t3-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+          ${s.nationality  ? `<div class="t3-info-row"><b>Nac.:</b> ${esc(s.nationality).toUpperCase()}</div>` : ''}
           ${s.maritalStatus? `<div class="t3-info-row"><b>E.Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}
         </div>` : ''}
         ${s.education ? `
@@ -661,7 +661,7 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
          ${s.phone ? `
       ${s.reference ? `
         <div style="margin-bottom:1px">
-      <div class="t3-section-label">Referência</div>
+      <div class="t3-section-label">REFERÊNCIAS</div>
       <div class="t3-contact-list">
         <div class="t2-contact-item"><i class="fa-solid fa-user-friends"></i>${esc(s.reference)}</div>
       </div>` : ''}
@@ -718,7 +718,7 @@ function renderTemplate4() {
           <h3 class="t4-sidebar-title">DADOS PESSOAIS</h3>
           <div class="t4-contact-list">
             ${s.birthDate ? `<div class="t4-contact-line">  <i class="fa-solid fa-cake-candles"></i>  <span>Nascimento: ${    s.birthDate.split('-').reverse().join('/')  }</span></div>` : ''}
-${s.nationality ? `<div class="t4-contact-line"><i class="fa-solid fa-flag"></i> <span>Nacionalidade: ${esc(s.nationality)}</span></div>` : ''}
+${s.nationality ? `<div class="t4-contact-line"><i class="fa-solid fa-flag"></i> <span>Nacionalidade: ${esc(s.nationality).toUpperCase()}</span></div>` : ''}
             ${s.maritalStatus ? `<div class="t4-contact-line"><i class="fa-solid fa-heart"></i>${esc(s.maritalStatus)}</div>` : ''}
       </div>
         </div>
@@ -856,7 +856,7 @@ ${s.nationality ? `<div class="t4-contact-line"><i class="fa-solid fa-flag"></i>
           <!-- CONTACTS -->
           ${s.additionalInfo ? `
           <div class="t4-main-block">
-            <h3 class="t4-main-title"><i class="fa-solid fa-user-friends"></i> Referência</h3>
+            <h3 class="t4-main-title"><i class="fa-solid fa-user-friends"></i> REFERÊNCIAS</h3>
               ${s.reference ? `<div class="t4-profile-text"><i class="fa-solid fa-user-friends"></i>Ref: ${esc(s.reference)}</div>` : ''}
     
 
@@ -923,7 +923,7 @@ function renderTemplate5() {
             <h3 class="t5-section-title">Dados Pessoais</h3>
             <div class="t5-contact-list">
               ${s.birthDate ? `<div class="t5-contact-item"><i class="fa-solid fa-calendar"></i> <span>Nascimento: ${esc(s.birthDate)}</span></div>` : ''}
-              ${s.nationality ? `<div class="t5-contact-item"><i class="fa-solid fa-globe"></i> <span>Nacionalidade: ${esc(s.nationality)}</span></div>` : ''}
+              ${s.nationality ? `<div class="t5-contact-item"><i class="fa-solid fa-globe"></i> <span>Nacionalidade: ${esc(s.nationality).toUpperCase()}</span></div>` : ''}
               ${s.maritalStatus ? `<div class="t5-contact-item"><i class="fa-solid fa-user-tie"></i> <span>Estado Civil: ${esc(s.maritalStatus)}</span></div>` : ''}
             </div>
           </div>
@@ -1017,7 +1017,7 @@ function renderTemplate5() {
           <!-- REFERÊNCIAS -->
           ${s.reference ? `
           <div class="t5-section">
-            <h3 class="t5-main-title">Referências</h3>
+            <h3 class="t5-main-title">REFERÊNCIAS</h3>
             <div class="t5-ref-box">
               <p class="t5-ref-name"><strong>${esc(s.reference)}</strong></p>
               ${s.contact2 ? `<p class="t5-ref-contact"><i class="fa-solid fa-phone"></i> ${esc(s.contact2)}</p>` : ''}
@@ -1067,7 +1067,7 @@ function renderTemplate6() {
         <div>
           <div class="t6-section-label">Pessoal</div>
           ${s.birthDate     ? `<div class="t6-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
-          ${s.nationality   ? `<div class="t6-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+          ${s.nationality   ? `<div class="t6-info-row"><b>Nac.:</b> ${esc(s.nationality).toUpperCase()}</div>` : ''}
           ${s.maritalStatus ? `<div class="t6-info-row"><b>Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}
         </div>` : ''}
         ${s.education ? `
@@ -1108,7 +1108,7 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
     <div class="t6-cover-text" style="margin-bottom:12px;">
       <strong>${esc(f.curso)}</strong><br>
 
-      ${f.inst ? `Instituição: ${esc(f.inst)}<br>` : ''}
+      ${f.inst ? `Instituição: ${esc(f.inst).toUpperCase()}<br>` : ''}
       ${f.periodo ? `Período: ${esc(f.periodo)}<br>` : ''}
       ${f.situacao ? `Situação: ${esc(f.situacao)}` : ''}
     </div>
