@@ -913,7 +913,7 @@ function renderTemplate5() {
               ${s.address ? `<div class="t5-contact-item"><i class="fa-solid fa-location-dot"></i> <span>${esc(s.address)}</span></div>` : ''}
               ${s.contact1 ? `<div class="t5-contact-item"><i class="fa-brands fa-whatsapp"></i> <span>${esc(s.contact1)}</span></div>` : ''}
               ${s.contact2 ? `<div class="t5-contact-item"><i class="fa-solid fa-phone"></i> <span>${esc(s.contact2)}</span></div>` : ''}
-            
+             ${s.contact2 ? `<div class="t5-hc-item">${esc(s.contact2)}<i class="fa-brands fa-whatsapp"></i></div>` : ''}
             </div>
           </div>
 
