@@ -261,6 +261,15 @@ function val(id) {
   return el ? el.value || '' : '';
 }
 
+/* ============================================================
+   HELPER — Détecte si le CV est "léger" (pas d'expériences)
+   et retourne la classe d'espacement à appliquer
+   ============================================================ */
+function getSpacingClass() {
+  const hasExp = state.experiences.filter(e => e.empresa || e.cargo).length > 0;
+  const hasForm = state.formations && state.formations.filter(f => f.curso).length > 0;
+  return (!hasExp && !hasForm) ? 'cv-spacious' : '';
+}
 
 /* ============================================================
    UPDATE PREVIEW
@@ -276,7 +285,13 @@ function updatePreview() {
   else if (state.template === 3) html = renderTemplate3();
   else if (state.template === 4) html = renderTemplate4();
   else if (state.template === 5) html = renderTemplate5();
-  else html = renderTemplate6();
+else if (state.template === 6) html = renderTemplate6();
+else if (state.template === 7) html = renderTemplate7();
+else if (state.template === 8) html = renderTemplate8();
+else if (state.template === 9)  html = renderTemplate9();
+else if (state.template === 10) html = renderTemplate10();
+else if (state.template === 11) html = renderTemplate11();
+else                            html = renderTemplate12();
 
   cv.innerHTML = html;
   adjustSectionSpacing();
@@ -360,12 +375,12 @@ function renderTemplate1() {
 
     </div>
  
-    <div class="t1-main">
+    <div class="t1-main ${getSpacingClass()}">
       <div class="t1-header-banner">
         <div class="t1-banner-name">${esc(s.fullName) || 'Seu Nome'}</div>
         
       </div>
-      <div class="t1-body">
+      <div class="t1-body ${getSpacingClass()}">
         ${s.coverLetter ? `
         <div class="t1-body-section">
           <div class="t1-body-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
@@ -443,8 +458,8 @@ function renderTemplate2() {
         <div class="t2-name">${esc(s.fullName) || 'Seu Nome'}</div>
       </div>
     </div>
-    <div class="t2-body">
-      <div class="t2-main">
+    <div class="t2-body ${getSpacingClass()}">
+      <div class="t2-main ${getSpacingClass()}">
         ${s.coverLetter ? `
         <div style="margin-bottom:12px">
           <div class="t2-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
@@ -912,8 +927,8 @@ function renderTemplate5() {
              ${s.email ? `<div class="t5-contact-item"><i class="fa-solid fa-envelope"></i> <span>${esc(s.email)}</span></div>` : ''}
               ${s.address ? `<div class="t5-contact-item"><i class="fa-solid fa-location-dot"></i> <span>${esc(s.address)}</span></div>` : ''}
               ${s.contact1 ? `<div class="t5-contact-item"><i class="fa-brands fa-whatsapp"></i> <span>${esc(s.contact1)}</span></div>` : ''}
-              ${s.contact2 ? `<div class="t5-contact-item"><i class="fa-solid fa-phone"></i> <span>${esc(s.contact2)}</span></div>` : ''}
-             ${s.contact2 ? `<div class="t5-hc-item">${esc(s.contact2)}<i class="fa-brands fa-whatsapp"></i></div>` : ''}
+              ${s.contact2 ? `<div class="t5-contact-item"><i class="fa-solid fa-phone"></i> <span>${esc(s.contact1)}</span></div>` : ''}
+            
             </div>
           </div>
 
@@ -1144,6 +1159,538 @@ ${s.formations.filter(f => f.curso).length > 0 ? `
 }
 
 /* ============================================================
+   TEMPLATE 7 — CLASSIC B&W
+   ============================================================ */
+function renderTemplate7() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t7-header">
+      ${s.photo ? `<div class="t7-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      <div class="t7-header-text">
+        <div class="t7-name">${esc(s.fullName) || 'Seu Nome'}</div>
+        <div class="t7-role">${esc(s.interest) || 'Área de Interesse'}</div>
+      </div>
+      <div class="t7-header-contacts">
+        ${s.email    ? `<div class="t7-hc-item">${esc(s.email)}<i class="fa-solid fa-envelope"></i></div>` : ''}
+        ${s.contact1 ? `<div class="t7-hc-item">${esc(s.contact1)}<i class="fa-solid fa-phone"></i></div>` : ''}
+        ${s.contact2 ? `<div class="t7-hc-item">${esc(s.contact2)}<i class="fa-brands fa-whatsapp"></i></div>` : ''}
+        ${s.address  ? `<div class="t7-hc-item">${esc(s.address)}<i class="fa-solid fa-location-dot"></i></div>` : ''}
+      </div>
+    </div>
+    <div class="t7-body">
+      <div class="t7-main">
+        ${s.coverLetter ? `
+        <div>
+          <div class="t7-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+          <div class="t7-cover-text">${esc(s.coverLetter)}</div>
+        </div>` : ''}
+
+        ${s.interest ? `
+        <div>
+          <div class="t7-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+          <div class="t7-cover-text">${esc(s.interest)}</div>
+        </div>` : ''}
+
+
+${s.formations.filter(f => f.curso).length > 0 ? `
+<div>
+  <div class="t7-section-title">
+    <i class="fa-solid fa-book-open"></i> Formação Profissional
+  </div>
+
+  ${s.formations.filter(f => f.curso).map(f => `
+    <div class="t7-cover-text" style="margin-bottom:12px;">
+      <strong>${esc(f.curso).toUpperCase()}</strong><br>
+
+      ${f.inst ? `Instituição: ${esc(f.inst).toUpperCase()}<br>` : ''}
+      ${f.periodo ? `Período: ${esc(f.periodo)}<br>` : ''}
+      ${f.situacao ? `Situação: <strong> ${esc(f.situacao)}` : ''}</strong>
+    </div>
+  `).join('')}
+</div>
+` : ''}
+
+
+        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+        <div>
+          <div class="t7-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+          <div class="t7-exp-item">
+            <div class="t7-job-title">${esc(e.cargo)||'Cargo'}</div>
+            <div class="t7-job-company">${esc(e.empresa)||''}</div>
+            ${e.periodo ? `<div class="t7-job-period">${esc(e.periodo)}</div>` : ''}
+            ${e.desc    ? `<div class="t7-job-desc">${esc(e.desc)}</div>` : ''}
+          </div>`).join('')}
+        </div>` : ''}
+        ${allSkills.length > 0 ? `
+        <div>
+          <div class="t7-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t7-skill-tag">${esc(sk)}</span>`).join('')}</div>
+        </div>` : ''}
+        ${s.additionalInfo ? `
+        <div>
+          <div class="t7-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+          <div class="t7-additional-text">${esc(s.additionalInfo)}</div>
+        </div>` : ''}
+      </div>
+      <div class="t7-sidebar">
+        ${(s.birthDate||s.nationality||s.maritalStatus) ? `
+        <div>
+          <div class="t7-section-label">Pessoal</div>
+          ${s.birthDate     ? `<div class="t7-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
+          ${s.nationality   ? `<div class="t7-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+          ${s.maritalStatus ? `<div class="t7-info-row"><b>Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}
+        </div>` : ''}
+        ${s.education ? `
+        <div>
+          <div class="t7-section-label">Escolaridade</div>
+          <div class="t7-edu-text">${esc(s.education)}</div>
+        </div>` : ''}
+        ${s.languages.filter(l=>l.nome).length > 0 ? `
+        <div>
+          <div class="t7-section-label">Idiomas</div>
+          ${s.languages.filter(l=>l.nome).map(l => `
+          <div class="t7-lang-item">
+            <span>${esc(l.nome)}</span>
+            <span class="t7-lang-level">${esc(l.nivel)}</span>
+          </div>`).join('')}
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   TEMPLATE 8 — MONO SIDEBAR
+   ============================================================ */
+function renderTemplate8() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t8-sidebar">
+      ${s.photo ? `<div class="t8-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      ${s.fullName ? `<div class="t8-name">${esc(s.fullName)}</div>` : ''}
+      ${s.interest ? `<div class="t8-role">${esc(s.interest)}</div>` : ''}
+      <div class="t8-divider"></div>
+      <div class="t8-section-label">Contato</div>
+      ${s.email    ? `<div class="t8-contact-item"><i class="fa-solid fa-envelope"></i>${esc(s.email)}</div>` : ''}
+      ${s.contact1 ? `<div class="t8-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
+      ${s.contact2 ? `<div class="t8-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
+      ${s.address  ? `<div class="t8-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
+      ${(s.birthDate||s.nationality||s.maritalStatus) ? `
+      <div class="t8-divider"></div>
+      <div class="t8-section-label">Pessoal</div>
+      ${s.birthDate     ? `<div class="t8-info-row"><b style="color:#111">Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
+      ${s.nationality   ? `<div class="t8-info-row"><b style="color:#111">Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+      ${s.maritalStatus ? `<div class="t8-info-row"><b style="color:#111">Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}` : ''}
+      ${s.education ? `
+      <div class="t8-divider"></div>
+      <div class="t8-section-label">Escolaridade</div>
+      <div class="t8-edu-text">${esc(s.education)}</div>` : ''}
+     
+      ${s.languages.filter(l=>l.nome).length > 0 ? `
+      <div class="t8-divider"></div>
+      <div class="t8-section-label">Idiomas</div>
+      ${s.languages.filter(l=>l.nome).map(l => `
+      <div class="t8-lang-item">
+        <span>${esc(l.nome)}</span>
+        <span class="t8-lang-level">${esc(l.nivel)}</span>
+      </div>`).join('')}` : ''}
+    </div>
+    <div class="t8-main">
+      <div class="t8-top-banner">
+        <div class="t8-banner-name">${esc(s.fullName) || 'Seu Nome'}</div>
+        <div class="t8-banner-role">${esc(s.interest) || 'Área de Interesse'}</div>
+      </div>
+      <div class="t8-body">
+        ${s.coverLetter ? `
+        <div>
+          <div class="t8-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+          <div class="t8-cover-text">${esc(s.coverLetter)}</div>
+        </div>` : ''}
+        ${s.interest ? `
+        <div>
+          <div class="t8-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+          <div class="t8-cover-text">${esc(s.interest)}</div>
+        </div>` : ''}
+        ${s.formations.filter(f => f.curso).length > 0 ? `
+<div>
+  <div class="t8-section-title">
+    <i class="fa-solid fa-book-open"></i> Formação Profissional
+  </div>
+
+  ${s.formations.filter(f => f.curso).map(f => `
+    <div class="t8-cover-text" style="margin-bottom:12px;">
+      <strong>${esc(f.curso).toUpperCase()}</strong><br>
+
+      ${f.inst ? `Instituição: ${esc(f.inst).toUpperCase()}<br>` : ''}
+      ${f.periodo ? `Período: ${esc(f.periodo)}<br>` : ''}
+      ${f.situacao ? `Situação: <strong> ${esc(f.situacao)}` : ''}</strong>
+    </div>
+  `).join('')}
+</div>
+` : ''}
+        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+        <div>
+          <div class="t8-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+          <div class="t8-exp-item">
+            <div class="t8-job-title">${esc(e.cargo)||'Cargo'}</div>
+            <div class="t8-job-company">${esc(e.empresa)||''}</div>
+            ${e.periodo ? `<div class="t8-job-period">${esc(e.periodo)}</div>` : ''}
+            ${e.desc    ? `<div class="t8-job-desc">${esc(e.desc)}</div>` : ''}
+          </div>`).join('')}
+        </div>` : ''}
+        ${allSkills.length > 0 ? `
+        <div>
+          <div class="t8-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t8-skill-chip">${esc(sk)}</span>`).join('')}</div>
+        </div>` : ''}
+        ${s.additionalInfo ? `
+        <div>
+          <div class="t8-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+          <div class="t8-additional-text">${esc(s.additionalInfo)}</div>
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   TEMPLATE 9 — PURE MINIMAL
+   ============================================================ */
+function renderTemplate9() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t9-header">
+      <div class="t9-top-row">
+        <div class="t9-name-block">
+          <div class="t9-name">${esc(s.fullName) || 'Seu Nome'}</div>
+          <div class="t9-role">${esc(s.interest) || 'Área de Interesse'}</div>
+        </div>
+        ${s.photo ? `<div class="t9-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      </div>
+      <div class="t9-contact-row">
+        ${s.email    ? `<div class="t9-contact-item"><i class="fa-solid fa-envelope"></i>${esc(s.email)}</div>` : ''}
+        ${s.contact1 ? `<div class="t9-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
+        ${s.contact2 ? `<div class="t9-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
+        ${s.address  ? `<div class="t9-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
+        ${s.birthDate     ? `<div class="t9-contact-item"><i class="fa-solid fa-cake-candles"></i>${formatDate(s.birthDate)}</div>` : ''}
+        ${s.nationality   ? `<div class="t9-contact-item"><i class="fa-solid fa-flag"></i>${esc(s.nationality)}</div>` : ''}
+        ${s.maritalStatus ? `<div class="t9-contact-item"><i class="fa-solid fa-heart"></i>${esc(s.maritalStatus)}</div>` : ''}
+      </div>
+    </div>
+    <div class="t9-body">
+      ${s.coverLetter ? `
+      <div>
+        <div class="t9-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+        <div class="t9-cover-text">${esc(s.coverLetter)}</div>
+      </div>` : ''}
+      ${s.interest ? `
+      <div>
+        <div class="t9-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+        <div class="t9-cover-text">${esc(s.interest)}</div>
+      </div>` : ''}
+      ${s.formations.filter(f => f.curso).length > 0 ? `
+<div>
+  <div class="t9-section-title">
+    <i class="fa-solid fa-book-open"></i> Formação Profissional
+  </div>
+
+  ${s.formations.filter(f => f.curso).map(f => `
+    <div class="t9-cover-text" style="margin-bottom:12px;">
+      <strong>${esc(f.curso).toUpperCase()}</strong><br>
+
+      ${f.inst ? `Instituição: ${esc(f.inst).toUpperCase()}<br>` : ''}
+      ${f.periodo ? `Período: ${esc(f.periodo)}<br>` : ''}
+      ${f.situacao ? `Situação: <strong> ${esc(f.situacao)}` : ''}</strong>
+    </div>
+  `).join('')}
+</div>
+` : ''}
+      ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+      <div>
+        <div class="t9-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+        ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+        <div class="t9-exp-item">
+          <div class="t9-exp-row">
+            <div>
+              <span class="t9-job-title">${esc(e.cargo)||'Cargo'}</span>
+              <span class="t9-job-sep">·</span>
+              <span class="t9-job-company">${esc(e.empresa)||''}</span>
+            </div>
+            <div class="t9-job-period">${esc(e.periodo)||''}</div>
+          </div>
+          ${e.desc ? `<div class="t9-job-desc">${esc(e.desc)}</div>` : ''}
+        </div>`).join('')}
+      </div>` : ''}
+      <div class="t9-bottom">
+        <div>
+          ${allSkills.length > 0 ? `
+          <div class="t9-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t9-skill-tag">${esc(sk)}</span>`).join('')}</div>` : ''}
+          ${s.additionalInfo ? `
+          <div style="margin-top:10px">
+            <div class="t9-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+            <div class="t9-additional-text">${esc(s.additionalInfo)}</div>
+          </div>` : ''}
+        </div>
+        <div>
+          ${s.education ? `
+          <div class="t9-section-title"><i class="fa-solid fa-graduation-cap"></i>Escolaridade</div>
+          <div class="t9-edu-text" style="margin-bottom:10px">${esc(s.education)}</div>` : ''}
+          ${s.languages.filter(l=>l.nome).length > 0 ? `
+          <div class="t9-section-title"><i class="fa-solid fa-language"></i>Idiomas</div>
+          ${s.languages.filter(l=>l.nome).map(l => `
+          <div class="t9-lang-item">
+            <span>${esc(l.nome)}</span>
+            <span class="t9-lang-level">${esc(l.nivel)}</span>
+          </div>`).join('')}` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+/* ============================================================
+   TEMPLATE 10 — CORAL SUNSET
+   ============================================================ */
+function renderTemplate10() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t10-sidebar">
+      ${s.photo ? `<div class="t10-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      ${s.fullName ? `<div class="t10-name">${esc(s.fullName)}</div>` : ''}
+      ${s.interest ? `<div class="t10-role">${esc(s.interest)}</div>` : ''}
+      <div class="t10-divider"></div>
+      <div class="t10-section-label">Contato</div>
+      ${s.email    ? `<div class="t10-contact-item"><i class="fa-solid fa-envelope"></i>${esc(s.email)}</div>` : ''}
+      ${s.contact1 ? `<div class="t10-contact-item"><i class="fa-solid fa-phone"></i>${esc(s.contact1)}</div>` : ''}
+      ${s.contact2 ? `<div class="t10-contact-item"><i class="fa-brands fa-whatsapp"></i>${esc(s.contact2)}</div>` : ''}
+      ${s.address  ? `<div class="t10-contact-item"><i class="fa-solid fa-location-dot"></i>${esc(s.address)}</div>` : ''}
+      ${(s.birthDate||s.nationality||s.maritalStatus) ? `
+      <div class="t10-divider"></div>
+      <div class="t10-section-label">Pessoal</div>
+      ${s.birthDate     ? `<div class="t10-info-row"><b style="color:#fff">Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
+      ${s.nationality   ? `<div class="t10-info-row"><b style="color:#fff">Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+      ${s.maritalStatus ? `<div class="t10-info-row"><b style="color:#fff">Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}` : ''}
+      ${s.education ? `
+      <div class="t10-divider"></div>
+      <div class="t10-section-label">Escolaridade</div>
+      <div class="t10-edu-text">${esc(s.education)}</div>` : ''}
+      ${allSkills.length > 0 ? `
+      <div class="t10-divider"></div>
+      <div class="t10-section-label">Habilidades</div>
+      ${allSkills.map(sk => `<div class="t10-skill-item">${esc(sk)}</div>`).join('')}` : ''}
+      ${s.languages.filter(l=>l.nome).length > 0 ? `
+      <div class="t10-divider"></div>
+      <div class="t10-section-label">Idiomas</div>
+      ${s.languages.filter(l=>l.nome).map(l => `
+      <div class="t10-lang-item">
+        <span>${esc(l.nome)}</span>
+        <span class="t10-lang-level">${esc(l.nivel)}</span>
+      </div>`).join('')}` : ''}
+    </div>
+    <div class="t10-main ${getSpacingClass()}">
+      <div class="t10-topbar">
+        <div class="t10-hero-name">${esc(s.fullName) || 'Seu Nome'}</div>
+        <div class="t10-hero-role">${esc(s.interest) || 'Área de Interesse'}</div>
+      </div>
+      <div class="t10-body">
+        ${s.coverLetter ? `
+        <div>
+          <div class="t10-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+          <div class="t10-cover-text">${esc(s.coverLetter)}</div>
+        </div>` : ''}
+        ${s.interest ? `
+        <div>
+          <div class="t10-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+          <div class="t10-cover-text">${esc(s.interest)}</div>
+        </div>` : ''}
+        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+        <div>
+          <div class="t10-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+          <div class="t10-exp-card">
+            <div class="t10-job-title">${esc(e.cargo)||'Cargo'}</div>
+            <div class="t10-job-company">${esc(e.empresa)||''}</div>
+            ${e.periodo ? `<div class="t10-job-period">${esc(e.periodo)}</div>` : ''}
+            ${e.desc    ? `<div class="t10-job-desc">${esc(e.desc)}</div>` : ''}
+          </div>`).join('')}
+        </div>` : ''}
+        ${allSkills.length > 0 ? `
+        <div>
+          <div class="t10-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t10-skill-chip">${esc(sk)}</span>`).join('')}</div>
+        </div>` : ''}
+        ${s.additionalInfo ? `
+        <div>
+          <div class="t10-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+          <div class="t10-additional-text">${esc(s.additionalInfo)}</div>
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   TEMPLATE 11 — OCEAN TEAL
+   ============================================================ */
+function renderTemplate11() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t11-header">
+      ${s.photo ? `<div class="t11-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      <div class="t11-name-area">
+        <div class="t11-hero-name">${esc(s.fullName) || 'Seu Nome'}</div>
+        <div class="t11-hero-role">${esc(s.interest) || 'Área de Interesse'}</div>
+      </div>
+      <div class="t11-header-contacts">
+        ${s.email    ? `<div class="t11-hc-item">${esc(s.email)}<i class="fa-solid fa-envelope"></i></div>` : ''}
+        ${s.contact1 ? `<div class="t11-hc-item">${esc(s.contact1)}<i class="fa-solid fa-phone"></i></div>` : ''}
+        ${s.contact2 ? `<div class="t11-hc-item">${esc(s.contact2)}<i class="fa-brands fa-whatsapp"></i></div>` : ''}
+        ${s.address  ? `<div class="t11-hc-item">${esc(s.address)}<i class="fa-solid fa-location-dot"></i></div>` : ''}
+      </div>
+    </div>
+    <div class="t11-body">
+      <div class="t11-main ${getSpacingClass()}">
+        ${s.coverLetter ? `
+        <div>
+          <div class="t11-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+          <div class="t11-cover-text">${esc(s.coverLetter)}</div>
+        </div>` : ''}
+        ${s.interest ? `
+        <div>
+          <div class="t11-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+          <div class="t11-cover-text">${esc(s.interest)}</div>
+        </div>` : ''}
+        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+        <div>
+          <div class="t11-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+          <div class="t11-exp-card">
+            <div class="t11-job-title">${esc(e.cargo)||'Cargo'}</div>
+            <div class="t11-job-company">${esc(e.empresa)||''}</div>
+            ${e.periodo ? `<div class="t11-job-period">${esc(e.periodo)}</div>` : ''}
+            ${e.desc    ? `<div class="t11-job-desc">${esc(e.desc)}</div>` : ''}
+          </div>`).join('')}
+        </div>` : ''}
+        ${allSkills.length > 0 ? `
+        <div>
+          <div class="t11-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t11-skill-chip">${esc(sk)}</span>`).join('')}</div>
+        </div>` : ''}
+        ${s.additionalInfo ? `
+        <div>
+          <div class="t11-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+          <div class="t11-additional-text">${esc(s.additionalInfo)}</div>
+        </div>` : ''}
+      </div>
+      <div class="t11-sidebar">
+        ${(s.birthDate||s.nationality||s.maritalStatus) ? `
+        <div>
+          <div class="t11-section-label">Pessoal</div>
+          ${s.birthDate     ? `<div class="t11-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
+          ${s.nationality   ? `<div class="t11-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+          ${s.maritalStatus ? `<div class="t11-info-row"><b>Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}
+        </div>` : ''}
+        ${s.education ? `
+        <div>
+          <div class="t11-section-label">Escolaridade</div>
+          <div class="t11-edu-text">${esc(s.education)}</div>
+        </div>` : ''}
+        ${s.languages.filter(l=>l.nome).length > 0 ? `
+        <div>
+          <div class="t11-section-label">Idiomas</div>
+          ${s.languages.filter(l=>l.nome).map(l => `
+          <div class="t11-lang-item">
+            <span>${esc(l.nome)}</span>
+            <span class="t11-lang-level">${esc(l.nivel)}</span>
+          </div>`).join('')}
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   TEMPLATE 12 — SUNSET SPLIT
+   ============================================================ */
+function renderTemplate12() {
+  const s = state;
+  const allSkills = [...s.skills, ...s.customSkills];
+  return `
+    <div class="t12-header">
+      ${s.photo ? `<div class="t12-photo"><img src="${s.photo}" alt="foto" /></div>` : ''}
+      <div class="t12-name-area">
+        <div class="t12-hero-name">${esc(s.fullName) || 'Seu Nome'}</div>
+        <div class="t12-hero-role">${esc(s.interest) || 'Área de Interesse'}</div>
+      </div>
+      <div class="t12-header-contacts">
+        ${s.email    ? `<div class="t12-hc-item">${esc(s.email)}<i class="fa-solid fa-envelope"></i></div>` : ''}
+        ${s.contact1 ? `<div class="t12-hc-item">${esc(s.contact1)}<i class="fa-solid fa-phone"></i></div>` : ''}
+        ${s.contact2 ? `<div class="t12-hc-item">${esc(s.contact2)}<i class="fa-brands fa-whatsapp"></i></div>` : ''}
+        ${s.address  ? `<div class="t12-hc-item">${esc(s.address)}<i class="fa-solid fa-location-dot"></i></div>` : ''}
+      </div>
+    </div>
+    <div class="t12-body">
+      <div class="t12-main ${getSpacingClass()}">
+        ${s.coverLetter ? `
+        <div>
+          <div class="t12-section-title"><i class="fa-solid fa-quote-left"></i>Apresentação</div>
+          <div class="t12-cover-text">${esc(s.coverLetter)}</div>
+        </div>` : ''}
+        ${s.interest ? `
+        <div>
+          <div class="t12-section-title"><i class="fa-solid fa-bullseye"></i>Área de Interesse</div>
+          <div class="t12-cover-text">${esc(s.interest)}</div>
+        </div>` : ''}
+        ${s.experiences.filter(e=>e.empresa||e.cargo).length > 0 ? `
+        <div>
+          <div class="t12-section-title"><i class="fa-solid fa-briefcase"></i>Experiência Profissional</div>
+          ${s.experiences.filter(e=>e.empresa||e.cargo).map(e => `
+          <div class="t12-exp-card">
+            <div class="t12-job-title">${esc(e.cargo)||'Cargo'}</div>
+            <div class="t12-job-company">${esc(e.empresa)||''}</div>
+            ${e.periodo ? `<div class="t12-job-period">${esc(e.periodo)}</div>` : ''}
+            ${e.desc    ? `<div class="t12-job-desc">${esc(e.desc)}</div>` : ''}
+          </div>`).join('')}
+        </div>` : ''}
+        ${allSkills.length > 0 ? `
+        <div>
+          <div class="t12-section-title"><i class="fa-solid fa-star"></i>Habilidades</div>
+          <div>${allSkills.map(sk => `<span class="t12-skill-chip">${esc(sk)}</span>`).join('')}</div>
+        </div>` : ''}
+        ${s.additionalInfo ? `
+        <div>
+          <div class="t12-section-title"><i class="fa-solid fa-circle-info"></i>Informações Adicionais</div>
+          <div class="t12-additional-text">${esc(s.additionalInfo)}</div>
+        </div>` : ''}
+      </div>
+      <div class="t12-sidebar">
+        ${(s.birthDate||s.nationality||s.maritalStatus) ? `
+        <div>
+          <div class="t12-section-label">Pessoal</div>
+          ${s.birthDate     ? `<div class="t12-info-row"><b>Nasc.:</b> ${formatDate(s.birthDate)}</div>` : ''}
+          ${s.nationality   ? `<div class="t12-info-row"><b>Nac.:</b> ${esc(s.nationality)}</div>` : ''}
+          ${s.maritalStatus ? `<div class="t12-info-row"><b>Civil:</b> ${esc(s.maritalStatus)}</div>` : ''}
+        </div>` : ''}
+        ${s.education ? `
+        <div>
+          <div class="t12-section-label">Escolaridade</div>
+          <div class="t12-edu-text">${esc(s.education)}</div>
+        </div>` : ''}
+        ${s.languages.filter(l=>l.nome).length > 0 ? `
+        <div>
+          <div class="t12-section-label">Idiomas</div>
+          ${s.languages.filter(l=>l.nome).map(l => `
+          <div class="t12-lang-item">
+            <span>${esc(l.nome)}</span>
+            <span class="t12-lang-level">${esc(l.nivel)}</span>
+          </div>`).join('')}
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+/* ============================================================
    EXPORT PDF
    ============================================================ */
 async function exportPDF() {
@@ -1348,17 +1895,12 @@ function scheduleAutoSave() {
    ============================================================ */
 function validate() {
   const name = document.getElementById('fullName')?.value.trim();
-  const email = document.getElementById('email')?.value.trim();
   if (!name) {
     showToast('Nome completo é obrigatório!', true);
     document.getElementById('fullName')?.focus();
     return false;
   }
-  if (!email) {
-    showToast('Email é obrigatório!', true);
-    document.getElementById('email')?.focus();
-    return false;
-  }
+  
   return true;
 }
 
@@ -1514,4 +2056,13 @@ function adjustSectionSpacing() {
       container.style.paddingBottom = `${30 + (3 - activeSectionsCount) * 15}px`;
     }
   }
+}/* ============================================================
+   TOGGLE TEMPLATES
+   ============================================================ */
+function toggleTemplates() {
+  const wrapper = document.getElementById('templateGridWrapper');
+  const icon = document.querySelector('.template-toggle-btn .toggle-icon');
+  
+  wrapper.classList.toggle('open');
+  icon.classList.toggle('rotated');
 }

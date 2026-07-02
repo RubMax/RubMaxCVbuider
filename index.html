@@ -64,56 +64,118 @@
     <aside class="form-panel" id="formPanel">
       <div class="form-scroll">
 
-        <!-- SEÇÃO 1: MODELOS PREMIUM -->
-        <section class="form-section template-section">
-          <h3 class="section-title">
-            <i class="fa-solid fa-palette"></i> Modelos Premium
-          </h3>
-          <div class="template-grid">
-            <div class="tpl-card active" data-tpl="1" onclick="selectTemplate(1)">
-              <div class="tpl-preview tpl1-preview">
-                <div class="tpl-bar"></div>
-                <div class="tpl-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>Corporate Gold</span>
-            </div>
-            <div class="tpl-card" data-tpl="2" onclick="selectTemplate(2)">
-              <div class="tpl-preview tpl2-preview">
-                <div class="tpl-circle"></div>
-                <div class="tpl-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>LinkedIn Premium</span>
-            </div>
-            <div class="tpl-card" data-tpl="3" onclick="selectTemplate(3)">
-              <div class="tpl-preview tpl3-preview">
-                <div class="tpl-greenbar"></div>
-                <div class="tpl-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>Clean Print</span>
-            </div>
-            <div class="tpl-card" data-tpl="4" onclick="selectTemplate(4)">
-              <div class="tpl-preview tpl4-preview">
-                <div class="tpl4-accent"></div>
-                <div class="tpl4-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>Élégance Rouge</span>
-            </div>
-            <div class="tpl-card" data-tpl="5" onclick="selectTemplate(5)">
-              <div class="tpl-preview tpl5-preview">
-                <div class="tpl5-side"></div>
-                <div class="tpl5-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>Minimaliste Pro</span>
-            </div>
-            <div class="tpl-card" data-tpl="6" onclick="selectTemplate(6)">
-              <div class="tpl-preview tpl6-preview">
-                <div class="tpl6-header"></div>
-                <div class="tpl6-lines"><span></span><span></span><span></span></div>
-              </div>
-              <span>Executive Steel</span>
-            </div>
+       <!-- SEÇÃO 1: MODELOS PREMIUM -->
+<section class="form-section template-section">
+  <button class="template-toggle-btn" onclick="toggleTemplates()">
+    <i class="fa-solid fa-palette"></i> 
+    <span>Modelos Premium</span>
+    <i class="fa-solid fa-chevron-down toggle-icon"></i>
+  </button>
+  
+  <div class="template-grid-wrapper" id="templateGridWrapper">
+    <div class="template-grid">
+      <div class="tpl-card active" data-tpl="1" onclick="selectTemplate(1)">
+        <div class="tpl-preview tpl1-preview">
+          <div class="tpl-bar"></div>
+          <div class="tpl-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>Corporate Gold</span>
+      </div>
+      <div class="tpl-card" data-tpl="2" onclick="selectTemplate(2)">
+        <div class="tpl-preview tpl2-preview">
+          <div class="tpl-circle"></div>
+          <div class="tpl-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>LinkedIn Premium</span>
+      </div>
+      <div class="tpl-card" data-tpl="3" onclick="selectTemplate(3)">
+        <div class="tpl-preview tpl3-preview">
+          <div class="tpl-greenbar"></div>
+          <div class="tpl-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>Clean Print</span>
+      </div>
+      <div class="tpl-card" data-tpl="4" onclick="selectTemplate(4)">
+        <div class="tpl-preview tpl4-preview">
+          <div class="tpl4-accent"></div>
+          <div class="tpl4-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>Élégance Rouge</span>
+      </div>
+      <div class="tpl-card" data-tpl="5" onclick="selectTemplate(5)">
+        <div class="tpl-preview tpl5-preview">
+          <div class="tpl5-side"></div>
+          <div class="tpl5-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>Minimaliste Pro</span>
+      </div>
+      <div class="tpl-card" data-tpl="6" onclick="selectTemplate(6)">
+        <div class="tpl-preview tpl6-preview">
+          <div class="tpl6-header"></div>
+          <div class="tpl6-lines"><span></span><span></span><span></span></div>
+        </div>
+        <span>Executive Steel</span>
+      </div>
+      <div class="tpl-card" data-tpl="7" onclick="selectTemplate(7)">
+        <div class="tpl-preview tpl7-preview">
+          <div class="tpl7-topline"></div>
+          <div class="tpl7-lines">
+            <span></span><span></span><span></span>
           </div>
-        </section>
+        </div>
+        <span>Classic B&W</span>
+      </div>
+      <div class="tpl-card" data-tpl="8" onclick="selectTemplate(8)">
+        <div class="tpl-preview tpl8-preview">
+          <div class="tpl8-sidebar"></div>
+          <div class="tpl8-lines">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <span>Mono Sidebar</span>
+      </div>
+      <div class="tpl-card" data-tpl="9" onclick="selectTemplate(9)">
+        <div class="tpl-preview tpl9-preview">
+          <div class="tpl9-header"></div>
+          <div class="tpl9-lines">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <span>Pure Minimal</span>
+      </div>
+      <div class="tpl-card" data-tpl="10" onclick="selectTemplate(10)">
+  <div class="tpl-preview tpl10-preview">
+    <div class="tpl10-left"></div>
+    <div class="tpl10-lines">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <span>Coral Sunset</span>
+</div>
+
+<div class="tpl-card" data-tpl="11" onclick="selectTemplate(11)">
+  <div class="tpl-preview tpl11-preview">
+    <div class="tpl11-top"></div>
+    <div class="tpl11-dot"></div>
+    <div class="tpl11-lines">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <span>Ocean Teal</span>
+</div>
+
+<div class="tpl-card" data-tpl="12" onclick="selectTemplate(12)">
+  <div class="tpl-preview tpl12-preview">
+    <div class="tpl12-bg"></div>
+    <div class="tpl12-lines">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <span>Sunset Split</span>
+</div>
+    </div>
+  </div>
+</section>
 
         <!-- SEÇÃO 2: INFORMAÇÕES PESSOAIS -->
         <section class="form-section">
@@ -135,7 +197,7 @@
               <input type="text" id="fullName" placeholder="Digite seu nome completo" oninput="updatePreview()" autocomplete="name" />
             </div>
             <div class="form-group">
-              <label>Email <span class="required">*</span></label>
+              <label>Email </label>
               <input type="email" id="email" placeholder="seu@email.com" oninput="updatePreview()" autocomplete="email" />
             </div>
             <!-- Dans la section Informações Pessoais, ajoutez après le champ Email -->
